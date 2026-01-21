@@ -18,7 +18,7 @@ export default function Navbar() {
                 <Link href="#" className="hover:text-blue-900 transition-colors">Home</Link>
                 <Link href="#" className="hover:text-blue-900 transition-colors">About</Link>
                 <Link href="#" className="hover:text-blue-900 transition-colors">Gallery</Link>
-                <Link href="#" className="hover:text-blue-900 transition-colors">Event</Link>
+                <Link href="/events" className="hover:text-blue-900 transition-colors">Event</Link>
                 <Link href="#" className="hover:text-blue-900 transition-colors">Contact Us</Link>
             </div>
 
