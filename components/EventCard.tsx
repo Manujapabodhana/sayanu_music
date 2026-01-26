@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Video, Clock, X, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, Video, Clock, X, CheckCircle2, CreditCard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { registerForEvent } from "@/lib/api";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 interface EventCardProps {
     id: number;
@@ -34,6 +38,7 @@ export default function EventCard({
     const [formData, setFormData] = useState({ name: "", email: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [paymentAmount] = useState(50); // Event registration fee in USD
 
     const getTypeColor = () => {
         switch (type) {
@@ -53,21 +58,34 @@ export default function EventCard({
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+        
         try {
-            await registerForEvent({
-                eventId: id,
-                userEmail: formData.email,
-                userName: formData.name,
+            // Create Stripe checkout session
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    eventId: id,
+                    eventTitle: title,
+                    userName: formData.name,
+                    userEmail: formData.email,
+                    amount: paymentAmount,
+                }),
             });
-            setIsSuccess(true);
-            setTimeout(() => {
-                setIsModalOpen(false);
-                setIsSuccess(false);
-                setFormData({ name: "", email: "" });
-            }, 2000);
+
+            const { sessionId, url } = await response.json();
+
+            if (url) {
+                // Redirect to Stripe Checkout
+                window.location.href = url;
+            } else {
+                throw new Error('Failed to create checkout session');
+            }
         } catch (error) {
-            alert("Registration failed. Please try again.");
-        } finally {
+            console.error('Payment error:', error);
+            alert("Payment failed. Please try again.");
             setIsSubmitting(false);
         }
     };
@@ -154,7 +172,7 @@ export default function EventCard({
                                             <CheckCircle2 size={32} />
                                         </div>
                                         <h4 className="text-xl font-bold text-green-700">Registration Successful!</h4>
-                                        <p className="text-gray-500">We've sent a confirmation to your email.</p>
+                                        <p className="text-gray-500">we've sent a confirmation to your email.</p>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleRegister} className="space-y-4">
@@ -180,12 +198,25 @@ export default function EventCard({
                                                 placeholder="john@example.com"
                                             />
                                         </div>
+
+                                        {/* Payment Info */}
+                                        <div className="bg-blue-50 rounded-lg p-4 space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-sm font-medium text-gray-700">Registration Fee</span>
+                                                <span className="text-lg font-bold text-blue-900">${paymentAmount}.00</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-xs text-gray-600">
+                                                <CreditCard size={14} />
+                                                <span>Secure payment via Stripe</span>
+                                            </div>
+                                        </div>
+
                                         <Button
                                             type="submit"
                                             disabled={isSubmitting}
                                             className="w-full bg-blue-900 hover:bg-blue-800 text-white font-medium py-6 mt-2"
                                         >
-                                            {isSubmitting ? "Registering..." : "Confirm Registration"}
+                                            {isSubmitting ? "Processing..." : `Pay $${paymentAmount} & Register`}
                                         </Button>
                                     </form>
                                 )}
