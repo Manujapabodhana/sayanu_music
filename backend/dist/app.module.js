@@ -28,13 +28,10 @@ exports.AppModule = AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({
-                    type: 'postgres',
-                    url: configService.get('DATABASE_URL'),
+                    type: 'better-sqlite3',
+                    database: configService.get('DATABASE_PATH') || 'database.sqlite',
                     entities: [event_entity_1.Event, registration_entity_1.Registration],
                     synchronize: true,
-                    ssl: {
-                        rejectUnauthorized: false,
-                    },
                 }),
                 inject: [config_1.ConfigService],
             }),

@@ -16,13 +16,10 @@ import { Registration } from './registrations/registration.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get<string>('DATABASE_URL'),
+        type: 'better-sqlite3',
+        database: configService.get<string>('DATABASE_PATH') || 'database.sqlite',
         entities: [Event, Registration],
         synchronize: true, // Only for development!
-        ssl: {
-          rejectUnauthorized: false, // Often needed for hosted DBs like Neon
-        },
       }),
       inject: [ConfigService],
     }),
