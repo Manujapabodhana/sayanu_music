@@ -5,6 +5,7 @@ interface Registration {
   id: number;
   userName: string;
   userEmail: string;
+  eventId: number;
   eventName: string;
   registeredAt: string;
 }
@@ -46,6 +47,7 @@ function App() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                 </tr>
@@ -56,6 +58,7 @@ function App() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reg.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{reg.userName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{reg.userEmail}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reg.eventId}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{reg.eventName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(reg.registeredAt).toLocaleDateString()}
