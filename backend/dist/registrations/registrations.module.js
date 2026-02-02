@@ -12,12 +12,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const registrations_service_1 = require("./registrations.service");
 const registrations_controller_1 = require("./registrations.controller");
 const registration_entity_1 = require("./registration.entity");
+const event_entity_1 = require("../events/event.entity");
 let RegistrationsModule = class RegistrationsModule {
 };
 exports.RegistrationsModule = RegistrationsModule;
 exports.RegistrationsModule = RegistrationsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([registration_entity_1.Registration])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([registration_entity_1.Registration, event_entity_1.Event])],
         providers: [registrations_service_1.RegistrationsService],
         controllers: [registrations_controller_1.RegistrationsController],
     })

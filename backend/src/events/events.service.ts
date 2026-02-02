@@ -17,4 +17,9 @@ export class EventsService {
     create(event: Partial<Event>): Promise<Event> {
         return this.eventsRepository.save(event);
     }
+
+    async update(id: number, event: Partial<Event>): Promise<Event> {
+        await this.eventsRepository.update(id, event);
+        return this.eventsRepository.findOneOrFail({ where: { id } });
+    }
 }

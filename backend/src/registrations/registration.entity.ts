@@ -8,6 +8,9 @@ export class Registration {
     @Column()
     eventId: number;
 
+    @Column({ nullable: true })
+    eventName: string;
+
     @Column()
     userEmail: string;
 

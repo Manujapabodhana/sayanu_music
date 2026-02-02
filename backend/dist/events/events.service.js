@@ -28,6 +28,10 @@ let EventsService = class EventsService {
     create(event) {
         return this.eventsRepository.save(event);
     }
+    async update(id, event) {
+        await this.eventsRepository.update(id, event);
+        return this.eventsRepository.findOneOrFail({ where: { id } });
+    }
 };
 exports.EventsService = EventsService;
 exports.EventsService = EventsService = __decorate([

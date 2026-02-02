@@ -1,8 +1,10 @@
 import { Repository } from 'typeorm';
 import { Registration } from './registration.entity';
+import { Event } from '../events/event.entity';
 import { CreateRegistrationDto } from './registrations.controller';
 export declare class RegistrationsService {
     private registrationsRepository;
-    constructor(registrationsRepository: Repository<Registration>);
+    private eventsRepository;
+    constructor(registrationsRepository: Repository<Registration>, eventsRepository: Repository<Event>);
     create(createRegistrationDto: CreateRegistrationDto): Promise<Registration>;
 }

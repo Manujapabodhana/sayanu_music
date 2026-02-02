@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 let Registration = class Registration {
     id;
     eventId;
+    eventName;
     userEmail;
     userName;
     registeredAt;
@@ -27,6 +28,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Registration.prototype, "eventId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Registration.prototype, "eventName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

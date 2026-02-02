@@ -17,19 +17,32 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const registration_entity_1 = require("./registration.entity");
+const event_entity_1 = require("../events/event.entity");
 let RegistrationsService = class RegistrationsService {
     registrationsRepository;
-    constructor(registrationsRepository) {
+    eventsRepository;
+    constructor(registrationsRepository, eventsRepository) {
         this.registrationsRepository = registrationsRepository;
+        this.eventsRepository = eventsRepository;
     }
-    create(createRegistrationDto) {
-        return this.registrationsRepository.save(createRegistrationDto);
+    async create(createRegistrationDto) {
+        const event = await this.eventsRepository.findOne({ where: { id: createRegistrationDto.eventId } });
+        if (!event) {
+            throw new Error('Event not found');
+        }
+        const registration = {
+            ...createRegistrationDto,
+            eventName: event.title,
+        };
+        return this.registrationsRepository.save(registration);
     }
 };
 exports.RegistrationsService = RegistrationsService;
 exports.RegistrationsService = RegistrationsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(registration_entity_1.Registration)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(event_entity_1.Event)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], RegistrationsService);
 //# sourceMappingURL=registrations.service.js.map

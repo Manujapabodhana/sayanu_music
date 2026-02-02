@@ -5,4 +5,5 @@ export declare class EventsController {
     constructor(eventsService: EventsService);
     findAll(): Promise<Event[]>;
     create(event: Partial<Event>): Promise<Event>;
+    update(id: string, event: Partial<Event>): Promise<Event>;
 }

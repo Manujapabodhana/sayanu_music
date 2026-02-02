@@ -5,4 +5,5 @@ export declare class EventsService {
     constructor(eventsRepository: Repository<Event>);
     findAll(): Promise<Event[]>;
     create(event: Partial<Event>): Promise<Event>;
+    update(id: number, event: Partial<Event>): Promise<Event>;
 }

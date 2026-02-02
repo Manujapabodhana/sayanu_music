@@ -15,8 +15,19 @@ export default function PaymentSuccessPage() {
 
     useEffect(() => {
         if (sessionId) {
-            // You can verify the payment on the backend here if needed
-            setTimeout(() => setLoading(false), 1000);
+            // Confirm payment and save registration
+            fetch('/api/confirm-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ session_id: sessionId }),
+            })
+            .then(() => setLoading(false))
+            .catch((error) => {
+                console.error('Failed to confirm payment:', error);
+                setLoading(false);
+            });
         } else {
             setLoading(false);
         }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { Event } from './event.entity';
 
@@ -14,5 +14,10 @@ export class EventsController {
     @Post()
     create(@Body() event: Partial<Event>): Promise<Event> {
         return this.eventsService.create(event);
+    }
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() event: Partial<Event>): Promise<Event> {
+        return this.eventsService.update(+id, event);
     }
 }
