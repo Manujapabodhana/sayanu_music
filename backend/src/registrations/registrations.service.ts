@@ -25,4 +25,8 @@ export class RegistrationsService {
         };
         return this.registrationsRepository.save(registration);
     }
+
+    async findAll(): Promise<Registration[]> {
+        return this.registrationsRepository.find();
+    }
 }

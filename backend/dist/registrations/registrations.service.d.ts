@@ -7,4 +7,5 @@ export declare class RegistrationsService {
     private eventsRepository;
     constructor(registrationsRepository: Repository<Registration>, eventsRepository: Repository<Event>);
     create(createRegistrationDto: CreateRegistrationDto): Promise<Registration>;
+    findAll(): Promise<Registration[]>;
 }

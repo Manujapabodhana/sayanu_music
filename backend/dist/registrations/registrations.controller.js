@@ -29,6 +29,9 @@ let RegistrationsController = class RegistrationsController {
     create(createRegistrationDto) {
         return this.registrationsService.create(createRegistrationDto);
     }
+    findAll() {
+        return this.registrationsService.findAll();
+    }
 };
 exports.RegistrationsController = RegistrationsController;
 __decorate([
@@ -38,6 +41,12 @@ __decorate([
     __metadata("design:paramtypes", [CreateRegistrationDto]),
     __metadata("design:returntype", Promise)
 ], RegistrationsController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RegistrationsController.prototype, "findAll", null);
 exports.RegistrationsController = RegistrationsController = __decorate([
     (0, common_1.Controller)('registrations'),
     __metadata("design:paramtypes", [registrations_service_1.RegistrationsService])

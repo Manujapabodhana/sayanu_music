@@ -36,6 +36,9 @@ let RegistrationsService = class RegistrationsService {
         };
         return this.registrationsRepository.save(registration);
     }
+    async findAll() {
+        return this.registrationsRepository.find();
+    }
 };
 exports.RegistrationsService = RegistrationsService;
 exports.RegistrationsService = RegistrationsService = __decorate([
