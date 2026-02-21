@@ -20,6 +20,11 @@ let EventsController = class EventsController {
     constructor(eventsService) {
         this.eventsService = eventsService;
     }
+    async getToken(id) {
+        const channelName = `event-${id}`;
+        const token = await this.eventsService.generateToken(channelName);
+        return { token, channel: channelName };
+    }
     findAll() {
         return this.eventsService.findAll();
     }
@@ -31,6 +36,13 @@ let EventsController = class EventsController {
     }
 };
 exports.EventsController = EventsController;
+__decorate([
+    (0, common_1.Get)(':id/token'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], EventsController.prototype, "getToken", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

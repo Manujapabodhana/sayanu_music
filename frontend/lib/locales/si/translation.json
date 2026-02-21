@@ -1,0 +1,38 @@
+{
+    "welcome": "සායනු සංගීතයට සාදරයෙන් පිළිගනිමු",
+    "description": "මෙය උදාහරණ පරිවර්තනයක් වේ.",
+    "events": {
+        "title": "ආසන්න සිදුවීම්",
+        "description": "ඊළඟ සති සඳහා වැඩමුළු, සජීවී සම්මන්ත්‍රණ සහ පියානෝ ක්‍රියාකාරකම් සොයා බලන්න.",
+        "totalEvents": "සම්පූර්ණ සිදුවීම්",
+        "thisWeek": "මෙම සතිය",
+        "noEventsFound": "සිදුවීම් නොමැත. පසුබැසීම සම්බන්ධය පරීක්ෂා කරන්න.",
+        "showing": "{{from}} සිට {{to}} දක්වා {{total}} ප්‍රතිඵල පෙන්වයි"
+    },
+    "eventCard": {
+        "liveSession": "සජීවී සැසිය",
+        "register": "ලියාපදිංචි වන්න",
+        "details": "විස්තර",
+        "registerTitle": "සිදුවීම සඳහා ලියාපදිංචි වන්න",
+        "registerDescription": "ඔබගේ ස්ථානය තහවුරු කිරීම සඳහා ඔබගේ විස්තර පුරවන්න",
+        "fullName": "සම්පූර්ණ නම",
+        "emailAddress": "විද්‍යුත් ලිපිනය",
+        "registrationFee": "ලියාපදිංචි ගාස්තුව",
+        "securePayment": "Stripe හරහා ආරක්ෂිත ගෙවීම",
+        "payAndRegister": "${{amount}} ගෙවා ලියාපදිංචි වන්න",
+        "processing": "සැකසෙමින්...",
+        "registrationSuccess": "ලියාපදිංචිය සාර්ථකයි!",
+        "confirmationSent": "අපි ඔබගේ විද්‍යුත් තැපෑලට තහවුරු කිරීමක් යැව්වෙමු."
+    },
+    "eventFilter": {
+        "searchPlaceholder": "සිදුවීම් සොයන්න...",
+        "allCategories": "සියලුම කාණ්ඩ",
+        "pianoLessons": "පියානෝ පාඩම්",
+        "workshops": "වැඩමුළු",
+        "masterclasses": "ප්‍රවීණ පන්ති",
+        "seminars": "සම්මන්ත්‍රණ",
+        "thisMonth": "මෙම මාසය",
+        "validMonth": "වලංගු මාසය",
+        "nextMonth": "ඊළඟ මාසය"
+    }
+}

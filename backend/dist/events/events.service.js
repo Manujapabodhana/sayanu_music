@@ -17,10 +17,24 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const event_entity_1 = require("./event.entity");
+const agora_access_token_1 = require("agora-access-token");
 let EventsService = class EventsService {
     eventsRepository;
+    agoraAppId = process.env.AGORA_APP_ID;
+    agoraAppCertificate = process.env.AGORA_APP_CERTIFICATE;
     constructor(eventsRepository) {
         this.eventsRepository = eventsRepository;
+    }
+    async generateToken(channelName, uid = 0, role = agora_access_token_1.RtcRole.PUBLISHER) {
+        const appId = this.agoraAppId;
+        const cert = this.agoraAppCertificate;
+        if (!appId || !cert) {
+            throw new Error('Agora credentials not configured');
+        }
+        const expirationTimeInSeconds = 3600;
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
+        return agora_access_token_1.RtcTokenBuilder.buildTokenWithUid(appId, cert, channelName, uid, role, privilegeExpiredTs);
     }
     findAll() {
         return this.eventsRepository.find({ order: { id: 'ASC' } });

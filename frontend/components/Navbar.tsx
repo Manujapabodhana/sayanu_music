@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GraduationCap } from "lucide-react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
     return (
@@ -16,13 +17,21 @@ export default function Navbar() {
 
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
                 <Link href="/" className="hover:text-blue-900 transition-colors">Home</Link>
-                <Link href="#" className="hover:text-blue-900 transition-colors">About</Link>
+                <Link href="/about" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
+                    About
+                </Link>
                 <Link href="#" className="hover:text-blue-900 transition-colors">Gallery</Link>
-                <Link href="/events" className="hover:text-blue-900 transition-colors">Event</Link>
+                <Link href="/events" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
+                    Events
+                </Link>
+                <Link href="/teachers" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
+                    Teachers
+                </Link>
                 <Link href="#" className="hover:text-blue-900 transition-colors">Contact Us</Link>
             </div>
 
             <div className="flex items-center gap-4">
+                <LanguageSwitcher />
                 <Button className="bg-blue-900 hover:bg-blue-800 text-white font-medium px-6">
                     Get Started
                 </Button>

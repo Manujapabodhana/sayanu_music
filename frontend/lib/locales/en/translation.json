@@ -1,0 +1,38 @@
+{
+    "welcome": "Welcome to Sayanu Music",
+    "description": "This is a sample translation.",
+    "events": {
+        "title": "Upcoming Events",
+        "description": "Discover workshops, live seminars, and piano activities for the coming weeks.",
+        "totalEvents": "Total Events",
+        "thisWeek": "This Week",
+        "noEventsFound": "No events found. Check backend connection.",
+        "showing": "Showing {{from}} to {{to}} of {{total}} results"
+    },
+    "eventCard": {
+        "liveSession": "Live Session",
+        "register": "Register",
+        "details": "Details",
+        "registerTitle": "Register for Event",
+        "registerDescription": "Fill in your details to secure your spot for",
+        "fullName": "Full Name",
+        "emailAddress": "Email Address",
+        "registrationFee": "Registration Fee",
+        "securePayment": "Secure payment via Stripe",
+        "payAndRegister": "Pay ${{amount}} & Register",
+        "processing": "Processing...",
+        "registrationSuccess": "Registration Successful!",
+        "confirmationSent": "we've sent a confirmation to your email."
+    },
+    "eventFilter": {
+        "searchPlaceholder": "Search events...",
+        "allCategories": "All Categories",
+        "pianoLessons": "Piano Lessons",
+        "workshops": "Workshops",
+        "masterclasses": "Masterclasses",
+        "seminars": "Seminars",
+        "thisMonth": "This Month",
+        "validMonth": "Valid Month",
+        "nextMonth": "Next Month"
+    }
+}

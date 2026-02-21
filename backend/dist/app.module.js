@@ -14,8 +14,11 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const events_module_1 = require("./events/events.module");
 const registrations_module_1 = require("./registrations/registrations.module");
+const teachers_module_1 = require("./teachers/teachers.module");
 const event_entity_1 = require("./events/event.entity");
 const registration_entity_1 = require("./registrations/registration.entity");
+const teacher_entity_1 = require("./teachers/teacher.entity");
+const chat_gateway_1 = require("./chat/chat.gateway");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -30,16 +33,17 @@ exports.AppModule = AppModule = __decorate([
                 useFactory: (configService) => ({
                     type: 'better-sqlite3',
                     database: configService.get('DATABASE_PATH') || 'database.sqlite',
-                    entities: [event_entity_1.Event, registration_entity_1.Registration],
+                    entities: [event_entity_1.Event, registration_entity_1.Registration, teacher_entity_1.Teacher],
                     synchronize: true,
                 }),
                 inject: [config_1.ConfigService],
             }),
             events_module_1.EventsModule,
             registrations_module_1.RegistrationsModule,
+            teachers_module_1.TeachersModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, chat_gateway_1.ChatGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -6,6 +6,14 @@ import { Event } from './event.entity';
 export class EventsController {
     constructor(private readonly eventsService: EventsService) { }
 
+    @Get(':id/token')
+    async getToken(@Param('id') id: string): Promise<{ token: string; channel: string }> {
+        const channelName = `event-${id}`;
+        // For simplicity, we use uid 0 (let Agora assign uid) or allow anonymous
+        const token = await this.eventsService.generateToken(channelName);
+        return { token, channel: channelName };
+    }
+
     @Get()
     findAll(): Promise<Event[]> {
         return this.eventsService.findAll();

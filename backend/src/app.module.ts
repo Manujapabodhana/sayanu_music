@@ -5,8 +5,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
 import { RegistrationsModule } from './registrations/registrations.module';
+import { TeachersModule } from './teachers/teachers.module';
 import { Event } from './events/event.entity';
 import { Registration } from './registrations/registration.entity';
+import { Teacher } from './teachers/teacher.entity';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
   imports: [
@@ -18,15 +21,16 @@ import { Registration } from './registrations/registration.entity';
       useFactory: (configService: ConfigService) => ({
         type: 'better-sqlite3',
         database: configService.get<string>('DATABASE_PATH') || 'database.sqlite',
-        entities: [Event, Registration],
+        entities: [Event, Registration, Teacher], // Add Teacher entity
         synchronize: true, // Only for development!
       }),
       inject: [ConfigService],
     }),
     EventsModule,
     RegistrationsModule,
+    TeachersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule { }

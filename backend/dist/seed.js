@@ -90,11 +90,114 @@ const sampleEvents = [
         category: 'Production'
     }
 ];
+const teacher_entity_1 = require("./teachers/teacher.entity");
+const sampleTeachers = [
+    {
+        name: "Arthur Pendelton",
+        photo: "https://images.unsplash.com/photo-1549476464-37392f717541?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Music Theory"],
+        rating: 4.9,
+        hourlyRate: 60,
+        bio: "Renowned for his mastery of Beethoven and Chopin, bringing 30 years of concert experience.",
+        isApproved: true
+    },
+    {
+        name: "Lila Vaughn",
+        photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Jazz"],
+        rating: 4.8,
+        hourlyRate: 55,
+        bio: "Teaches the art of swing, bebop, and modern jazz fusion with creative freedom.",
+        isApproved: true
+    },
+    {
+        name: "Sarah Chen",
+        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano"],
+        rating: 4.7,
+        hourlyRate: 40,
+        bio: "Patient and encouraging, perfect for students taking their very first steps in piano.",
+        isApproved: true
+    },
+    {
+        name: "Marcus Thorne",
+        photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Composition"],
+        rating: 4.9,
+        hourlyRate: 75,
+        bio: "Guiding students to write their own masterpieces while mastering the keys.",
+        isApproved: true
+    },
+    {
+        name: "Ms. Daisy",
+        photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano"],
+        rating: 4.6,
+        hourlyRate: 35,
+        bio: "Making piano learning a magical adventure for children ages 4-10.",
+        isApproved: true
+    },
+    {
+        name: "Dr. James Wilson",
+        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Music Theory"],
+        rating: 5.0,
+        hourlyRate: 80,
+        bio: "Understanding the 'why' behind the music to unlock deeper performance.",
+        isApproved: true
+    },
+    {
+        name: "Elena Rodriguez",
+        photo: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Latin Jazz"],
+        rating: 4.8,
+        hourlyRate: 50,
+        bio: "Infusing rhythmic complexity and latin grooves into your repertoire.",
+        isApproved: true
+    },
+    {
+        name: "Sofia Kovar",
+        photo: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano"],
+        rating: 4.9,
+        hourlyRate: 70,
+        bio: "High-level technical training for competitive pianists and performance majors.",
+        isApproved: true
+    },
+    {
+        name: "Jax Miller",
+        photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Synth"],
+        rating: 4.5,
+        hourlyRate: 45,
+        bio: "Learn to play top 40 hits, accompany singers, and master synthesizers.",
+        isApproved: true
+    },
+    {
+        name: "Leo Vance",
+        photo: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano", "Reading"],
+        rating: 4.7,
+        hourlyRate: 50,
+        bio: "Building rock-solid reading skills to play any piece of music on sight.",
+        isApproved: true
+    },
+    {
+        name: "Unapproved User",
+        photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        instruments: ["Piano"],
+        rating: 2.0,
+        hourlyRate: 10,
+        bio: "I am not approved yet.",
+        isApproved: false
+    }
+];
 async function seed() {
     console.log('🌱 Initializing NestJS application for seeding...\n');
     const app = await core_1.NestFactory.createApplicationContext(app_module_1.AppModule);
     try {
         const eventRepository = app.get((0, typeorm_1.getRepositoryToken)(event_entity_1.Event));
+        const teacherRepository = app.get((0, typeorm_1.getRepositoryToken)(teacher_entity_1.Teacher));
         const existingCount = await eventRepository.count();
         if (existingCount > 0) {
             console.log(`📊 Found ${existingCount} existing events in database`);
@@ -104,6 +207,15 @@ async function seed() {
         console.log('📝 Creating events using TypeORM...\n');
         const events = await eventRepository.save(sampleEvents);
         console.log(`✅ Successfully seeded ${events.length} events!\n`);
+        const existingTeacherCount = await teacherRepository.count();
+        if (existingTeacherCount > 0) {
+            console.log(`📊 Found ${existingTeacherCount} existing teachers in database`);
+            console.log('🗑️  Clearing existing teachers...\n');
+            await teacherRepository.clear();
+        }
+        console.log('📝 Creating teachers using TypeORM...\n');
+        const teachers = await teacherRepository.save(sampleTeachers);
+        console.log(`✅ Successfully seeded ${teachers.length} teachers!\n`);
         console.log('📅 Events in database:');
         events.forEach(event => {
             const location = event.isOnline ? '🌐 Online' : `📍 ${event.location}`;

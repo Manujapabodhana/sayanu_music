@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Video, Clock, X, CheckCircle2, CreditCard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,6 +35,7 @@ export default function EventCard({
     isOnline,
     description,
 }: EventCardProps) {
+    const { t } = useTranslation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({ name: "", email: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +60,7 @@ export default function EventCard({
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
+
         try {
             // Create Stripe checkout session
             const response = await fetch('/api/create-checkout-session', {
@@ -111,7 +113,7 @@ export default function EventCard({
                             {isOnline ? (
                                 <>
                                     <Video size={14} />
-                                    <span>Live Session</span>
+                                    <span>{t('eventCard.liveSession')}</span>
                                 </>
                             ) : (
                                 <>
@@ -137,10 +139,18 @@ export default function EventCard({
                         onClick={() => setIsModalOpen(true)}
                         className="w-full bg-blue-900 hover:bg-blue-800 text-white font-medium"
                     >
-                        Register
+                        {t('eventCard.register')}
                     </Button>
+                    {isOnline && (
+                        <Button
+                            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium"
+                            onClick={() => window.location.href = `/events/${id}/room`}
+                        >
+                            Join Room
+                        </Button>
+                    )}
                     <Button variant="outline" className="w-full border-gray-200 text-gray-700 hover:bg-gray-50">
-                        Details
+                        {t('eventCard.details')}
                     </Button>
                 </div>
             </div>
@@ -163,21 +173,21 @@ export default function EventCard({
                             </button>
 
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-1">Register for Event</h3>
-                                <p className="text-gray-500 text-sm mb-6">Fill in your details to secure your spot for <span className="font-semibold text-blue-900">{title}</span>.</p>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-1">{t('eventCard.registerTitle')}</h3>
+                                <p className="text-gray-500 text-sm mb-6">{t('eventCard.registerDescription')} <span className="font-semibold text-blue-900">{title}</span>.</p>
 
                                 {isSuccess ? (
                                     <div className="flex flex-col items-center justify-center py-8 text-center space-y-3">
                                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                                             <CheckCircle2 size={32} />
                                         </div>
-                                        <h4 className="text-xl font-bold text-green-700">Registration Successful!</h4>
-                                        <p className="text-gray-500">we've sent a confirmation to your email.</p>
+                                        <h4 className="text-xl font-bold text-green-700">{t('eventCard.registrationSuccess')}</h4>
+                                        <p className="text-gray-500">{t('eventCard.confirmationSent')}</p>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleRegister} className="space-y-4">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-gray-700">Full Name</label>
+                                            <label className="text-sm font-medium text-gray-700">{t('eventCard.fullName')}</label>
                                             <input
                                                 type="text"
                                                 required
@@ -188,7 +198,7 @@ export default function EventCard({
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-gray-700">Email Address</label>
+                                            <label className="text-sm font-medium text-gray-700">{t('eventCard.emailAddress')}</label>
                                             <input
                                                 type="email"
                                                 required
@@ -202,12 +212,12 @@ export default function EventCard({
                                         {/* Payment Info */}
                                         <div className="bg-blue-50 rounded-lg p-4 space-y-2">
                                             <div className="flex items-center justify-between">
-                                                <span className="text-sm font-medium text-gray-700">Registration Fee</span>
+                                                <span className="text-sm font-medium text-gray-700">{t('eventCard.registrationFee')}</span>
                                                 <span className="text-lg font-bold text-blue-900">${paymentAmount}.00</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-xs text-gray-600">
                                                 <CreditCard size={14} />
-                                                <span>Secure payment via Stripe</span>
+                                                <span>{t('eventCard.securePayment')}</span>
                                             </div>
                                         </div>
 
@@ -216,7 +226,7 @@ export default function EventCard({
                                             disabled={isSubmitting}
                                             className="w-full bg-blue-900 hover:bg-blue-800 text-white font-medium py-6 mt-2"
                                         >
-                                            {isSubmitting ? "Processing..." : `Pay $${paymentAmount} & Register`}
+                                            {isSubmitting ? t('eventCard.processing') : t('eventCard.payAndRegister', { amount: paymentAmount })}
                                         </Button>
                                     </form>
                                 )}
